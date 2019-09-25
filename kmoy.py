@@ -1,8 +1,4 @@
 from sklearn.datasets import load_iris
-dataset= load_iris()
-import numpy as np
-from random import choice
-from sklearn.datasets import load_iris
 
 dataset = load_iris()
 import numpy as np
