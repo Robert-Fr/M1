@@ -1,14 +1,10 @@
-from sklearn.datasets import load_iris
-dataset= load_iris()
 import numpy as np
 from random import choice
 from sklearn.datasets import load_iris
-
-dataset = load_iris()
-import numpy as np
-from random import choice
 import copy as c
-
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
+dataset = load_iris()
 # x est notre liste de vecteur, chaque vecteur représantant une iris à l'aide de 4 attributs
 x = dataset.data
 
@@ -78,9 +74,20 @@ def k_moy(epsilon, k, x):
         for i in range(0, len(x)):
             condition_boucle += abs(liste_app_l_suivant[i] - liste_app_l[i])
         condition_boucle = condition_boucle / len(x)
+    
     print("Algorithme terminé avec " + str(l) + " itérations.")
+    return liste_app_l_suivant
 
-
-k_moy(0.000000005, 5, x)
-print("fini")
-#init_centroide_alea(x,5)
+assignements=k_moy(0.05, 5, x)
+print(assignements)
+pca = PCA(n_components=2)
+x_r = pca.fit(x).transform(x)
+k=len(set(assignements))
+print(k)
+target_names=range(k)
+plt.figure()
+for i,target_names in zip(range(k),target_names):
+    plt.scatter(x_r[assignements == i, 0 ], x_r[assignements == i, 1], label=target_names)
+plt.legend(loc='best')
+plt.title('partition_obtenue_par_k-means_sur_la_collection_Iris')
+plt.show()
